@@ -1,11 +1,22 @@
+// src/App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import MainPage from './routes/MainPage';
+import ResultPage from './routes/ResultPage';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [results, setResults] = useState([]);
+
   return (
-    <div className="App">
-      <p>멋사에서 만나 화이팅~</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage setResults={setResults} />} />
+        <Route path="/result" element={<ResultPage results={results} setResults={setResults} />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
