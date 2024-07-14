@@ -49,7 +49,7 @@ const ResultPage = ({ results, setResults }) => {
       <div className="relative w-full h-screen">
         <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
         <div className="absolute inset-0 z-0 pointer-events-none">
-            <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} />
+          <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} />
         </div>
       </div>
     )
