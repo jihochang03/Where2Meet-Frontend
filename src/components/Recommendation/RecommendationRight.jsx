@@ -4,7 +4,7 @@ import table from '../../assets/images/table.png';
 import kakao from '../../assets/images/kakao.png';
 import naver from '../../assets/images/naver.png';
 
-const RecommendationRight = ({ result, comment }) => (
+const RecommendationRight = ({ result, comment, onShare }) => (
   <div>
     <div className="text-3xl font-bold mb-5">GPT 요약</div>
     <div className="mb-5 text-xl">
@@ -37,7 +37,7 @@ const RecommendationRight = ({ result, comment }) => (
           길찾기
         </a>
       </button>
-      <button className="bg-green-500 text-white px-2 py-1 rounded">
+      <button className="bg-green-500 text-white px-2 py-1 rounded" onClick={onShare}>
         공유하기
       </button>
     </div>

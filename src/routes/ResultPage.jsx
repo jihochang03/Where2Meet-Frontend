@@ -1,6 +1,7 @@
 // src/routes/ResultPage.jsx
 import React, { useEffect, useState } from 'react';
 import Recommendation from '../components/Recommendation/Recommendation';
+import Share from '../components/Share';
 import resultsData from '../data/results';
 import comments from '../data/gpt_comments';
 
@@ -9,6 +10,7 @@ const { kakao } = window
 const ResultPage = ({ results, setResults }) => {
   const [selected, setSelected] = useState(1);
   const [gptComments, setGptComments] = useState([]);
+  const [shareMode, setShareMode] = useState(false);
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -41,18 +43,17 @@ const ResultPage = ({ results, setResults }) => {
 
 
   return (
-    results.length === 0 ? (
-      <div className="relative w-full h-screen">
-        <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
-      </div>
-    ) : (
-      <div className="relative w-full h-screen">
-        <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
+    <div className="relative w-full h-screen">
+      <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
+      {results.length > 0 && (
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} />
+          <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} onShare={() => setShareMode(true)} />
         </div>
-      </div>
-    )
+      )}
+      {shareMode && (
+        <Share onClose={() => setShareMode(false)} />
+      )}
+    </div>
   );
 };
 

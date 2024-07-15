@@ -4,7 +4,7 @@ import RecommendationNumber from './RecommendationNumber';
 import RecommendationLeft from './RecommendationLeft';
 import RecommendationRight from './RecommendationRight';
 
-const Recommendation = ({ results, gptComments, selected, setSelected }) => {
+const Recommendation = ({ results, gptComments, selected, setSelected, onShare }) => {
   return (
     <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-[calc(100%-100px)] bg-white bg-opacity-70 p-4 rounded-lg shadow-md h-72 pointer-events-auto">
       <div className="absolute top-0 left-0 transform -translate-y-1/2 flex">
@@ -22,7 +22,7 @@ const Recommendation = ({ results, gptComments, selected, setSelected }) => {
           <RecommendationLeft result={results[selected-1]} />
         </div>
         <div className="w-3/5 flex flex-col justify-between">
-          <RecommendationRight result={results[selected-1]} comment={gptComments[selected-1]} />
+          <RecommendationRight result={results[selected-1]} comment={gptComments[selected-1]} onShare={onShare} />
         </div>
       </div>
     </div>
