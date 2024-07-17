@@ -1,9 +1,11 @@
 // src/routes/ResultPage.jsx
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Recommendation from '../components/Recommendation/Recommendation';
 import Share from '../components/Share';
 import resultsData from '../data/results';
 import comments from '../data/gpt_comments';
+import Button from '../components/Button';
 
 const { kakao } = window
 
@@ -11,6 +13,7 @@ const ResultPage = ({ results, setResults }) => {
   const [selected, setSelected] = useState(1);
   const [gptComments, setGptComments] = useState([]);
   const [shareMode, setShareMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -40,8 +43,10 @@ const ResultPage = ({ results, setResults }) => {
     // 일단 임시로 dummy data 가져옴
     setGptComments(comments);
   }, [results]);
-
-
+ 
+  const handleBackToMain = () => {
+    navigate('/'); // Navigate to the main page route ('/')
+  };
   return (
     <div className="relative w-full h-screen">
       <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
@@ -53,6 +58,9 @@ const ResultPage = ({ results, setResults }) => {
       {shareMode && (
         <Share onClose={() => setShareMode(false)} />
       )}
+      <div className="absolute left-5 z-10">
+        <Button text="다시하기" onClick={handleBackToMain} />
+      </div>
     </div>
   );
 };
