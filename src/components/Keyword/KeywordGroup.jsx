@@ -4,7 +4,7 @@ import Keyword from './Keyword';
 
 const KeywordGroup = ({ keywords, selectedKeywords, onSelectKeyword }) => (
   <div className="w-full flex justify-center mt-5">
-    <div className="flex flex-col items-center w-[80%] gap-[17px] px-0 py-[13px] bg-system-colors-overlays-default rounded-[10px]">
+    <div className="flex flex-col items-center w-[80%] gap-[17px] px-4 py-4 bg-system-colors-overlays-default rounded-[10px]">
       <div className="relative self-stretch mt-[-1.00px] font-bold text-black text-lg text-center">
         만남을 나타내는 키워드를 선택하세요!
       </div>

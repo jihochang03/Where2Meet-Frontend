@@ -47,6 +47,7 @@ const ResultPage = ({ results, setResults }) => {
   const handleBackToMain = () => {
     navigate('/'); // Navigate to the main page route ('/')
   };
+  
   return (
     <div className="relative w-full h-screen">
       <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
