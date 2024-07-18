@@ -103,7 +103,7 @@ const MainPage = ({ setResults }) => {
           <Search onNormalMode={handleNormalMode} />
         </div>
       ) : (
-        <div className="bg-white w-full md:min-w-[min(600px,30%)] md:w-80 h-full relative">
+        <div className="bg-white w-full md:min-w-[min(600px,30%)] md:w-[353px] h-full relative">
           <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex flex-col gap-4 p-8">
             <StartPointGroup points={startPoints} onAddPoint={handleAddStartPoint} onDeletePoint={handleDeleteStartPoint} onSearchMode={handleSearchMode} />
             <KeywordGroup keywords={keywords} selectedKeywords={selectedKeywords} onSelectKeyword={handleSelectKeyword} />
