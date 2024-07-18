@@ -9,6 +9,10 @@ const Search = ({ onNormalMode }) => {
 
   const handleSearch = async () => {
     try {
+      if(searchTerm === '') {
+        alert("검색어를 입력해주세요.");
+        return;
+      }
       const result = await searchAddress(searchTerm);
       setResults(result.documents);
     } catch(error) {
