@@ -12,14 +12,19 @@ const StartPoint = ({ point, isLast, onAddPoint, onDeletePoint, onSearchMode }) 
       className={`w-6 h-6 ${isLast ? 'opacity-0' : ''}`}
     />
     <div className={`flex-1 flex items-center h-10 p-2.5 ${isLast ? 'bg-blue-100' : 'bg-white'} rounded-[5px]`}>
-      <input
-        type="text"
-        value={isLast ? "경로 추가" : point.place_name}
-        placeholder={!isLast ? "출발 장소 입력하기" : ""}
-        readOnly={!isLast}
-        className={`w-full h-full bg-transparent outline-none text-[#363131] text-lg ${isLast ? '' : 'cursor-pointer'}`}
-        onClick={() => { if(!isLast) onSearchMode(point.id) }}
-      />
+      {isLast ? (
+        <div className="w-full h-full bg-transparent text-[#363131] text-lg flex items-center">
+          경로 추가
+        </div>
+      ) : (
+        <input
+          type="text"
+          value={point.place_name}
+          placeholder="출발 장소 입력하기"
+          className="w-full h-full bg-transparent outline-none text-[#363131] text-lg cursor-pointer text-ellipsis"
+          onClick={() => {onSearchMode(point.id)}}
+        />
+      )}
       {isLast ? <img src={addpoint} alt="Add Point" className="w-6 h-6 ml-2 cursor-pointer" onClick={onAddPoint} />
       : <img src={deletePoint} alt="Delete Point" className="w-6 h-6 ml-2 cursor-pointer" onClick={()=>{onDeletePoint(point.id)}} />
       }
