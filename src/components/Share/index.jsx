@@ -11,6 +11,11 @@ export const Share = ({ onClose }) => {
     alert("URL이 복사되었습니다.");
   }
 
+  const handleKakaoShare = () => {
+    // TODO: share the URL to KakaoTalk using kakao sdk
+
+  }
+
   return (
     <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50">
       <div className="relative bg-white rounded-[14px] shadow-lg pb-10" style={{ minWidth: 'min(450px, 90%)', maxWidth: 'min(450px, 90%)' }}>
@@ -35,7 +40,10 @@ export const Share = ({ onClose }) => {
               alt="KakaoTalk Icon"
               src={kakao}
             />
-            <button className="bg-[#2c2c2c] text-white py-2 rounded w-32">
+            <button
+              className="bg-[#2c2c2c] text-white py-2 rounded w-32"
+              onClick={handleKakaoShare}
+            >
               카카오톡
             </button>
           </div>
