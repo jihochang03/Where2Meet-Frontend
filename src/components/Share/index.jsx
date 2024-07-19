@@ -1,5 +1,5 @@
 // src/components/Share/index.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import close from "../../assets/images/close.png";
 import kakao from "../../assets/images/kakao_48.png";
@@ -9,6 +9,12 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Share = ({ onClose }) => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setVisible(true);
+  }, []);
+
   const handleCopyURL = () => {
     toast.info('URL 복사 완료!', {
       position: "top-center",
@@ -28,14 +34,19 @@ export const Share = ({ onClose }) => {
 
   }
 
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 500);
+  }
+
   return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50">
+    <div className={`fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="relative bg-white rounded-[14px] shadow-lg pb-10" style={{ minWidth: 'min(450px, 90%)', maxWidth: 'min(450px, 90%)' }}>
         <img
           className="absolute w-[27px] h-[27px] top-[18px] right-[18px] cursor-pointer"
           alt="Close Icon"
           src={close}
-          onClick={onClose}
+          onClick={handleClose}
         />
         <div className="flex flex-col items-center gap-[15px] mt-8 px-5">
           <div className="font-bold text-black text-2xl sm:text-3xl text-center">
