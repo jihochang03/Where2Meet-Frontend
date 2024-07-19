@@ -3,6 +3,9 @@ import { searchAddress } from '../../apis/api';
 import SearchInput from './SearchInput';
 import SearchOutputGroup from './SearchOutputGroup';
 
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Search = ({ onNormalMode }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
@@ -10,15 +13,49 @@ const Search = ({ onNormalMode }) => {
   const handleSearch = async () => {
     try {
       if(searchTerm === '') {
-        // TODO: change the alert message to a toast message
-        alert("검색어를 입력해주세요.");
+        toast.warn('검색어를 입력해주세요🧐', {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });  
         return;
       }
       const result = await searchAddress(searchTerm);
+
+      if(result.documents.length === 0) {
+        toast.info('검색 결과가 없네요🥹', {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });  
+        return;
+      }
+      
       setResults(result.documents);
     } catch(error) {
-      // TODO: change the alert message to a toast message
-      alert("검색 결과를 불러오는 중 오류가 발생했습니다.");
+      toast.error('오류가 발생했어요😞', {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
     }
   };
 
@@ -33,6 +70,7 @@ const Search = ({ onNormalMode }) => {
       <div className="mt-4 flex-grow overflow-auto">
         <SearchOutputGroup results={results} onNormalMode={onNormalMode} />
       </div>
+      <ToastContainer icon={false} />
     </div>
   );
 };

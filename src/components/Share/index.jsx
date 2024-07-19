@@ -5,10 +5,22 @@ import close from "../../assets/images/close.png";
 import kakao from "../../assets/images/kakao_48.png";
 import share from "../../assets/images/share_48.png";
 
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Share = ({ onClose }) => {
   const handleCopyURL = () => {
-    // TODO: change the alert message to a toast message
-    alert("URL이 복사되었습니다.");
+    toast.info('URL 복사 완료!', {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });  
   }
 
   const handleKakaoShare = () => {
@@ -26,7 +38,7 @@ export const Share = ({ onClose }) => {
           onClick={onClose}
         />
         <div className="flex flex-col items-center gap-[15px] mt-8 px-5">
-          <div className="font-bold text-black text-3xl text-center">
+          <div className="font-bold text-black text-2xl sm:text-3xl text-center">
             공유하기
           </div>
           <div className="text-black text-center truncate" style={{ maxWidth: '100%' }}>
@@ -41,7 +53,7 @@ export const Share = ({ onClose }) => {
               src={kakao}
             />
             <button
-              className="bg-[#2c2c2c] text-white py-2 rounded w-32"
+              className="bg-[#2c2c2c] text-white py-2 rounded w-24 sm:w-32"
               onClick={handleKakaoShare}
             >
               카카오톡
@@ -57,13 +69,14 @@ export const Share = ({ onClose }) => {
               text="https://where2meet/hehe/com"
               onCopy={handleCopyURL}
             >
-              <button className="bg-[#2c2c2c] text-white py-2 rounded w-32">
+              <button className="bg-[#2c2c2c] text-white py-2 rounded w-24 sm:w-32">
                 URL 복사
               </button>
             </CopyToClipboard>
           </div>
         </div>
       </div>
+      <ToastContainer icon={false} />
     </div>
   );
 };

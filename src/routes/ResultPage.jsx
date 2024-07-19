@@ -50,11 +50,9 @@ const ResultPage = ({ results, setResults }) => {
   
   return (
     <div className="relative w-full h-screen">
-      <div id="map" className="absolute inset-0 w-full h-full z-0"></div>
+      <div id="map" className="absolute w-full h-full z-0"></div>
       {results.length > 0 && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} onShare={() => setShareMode(true)} />
-        </div>
+        <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} onShare={() => setShareMode(true)} />
       )}
       {shareMode && (
         <Share onClose={() => setShareMode(false)} />
