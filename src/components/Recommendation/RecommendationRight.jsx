@@ -5,14 +5,12 @@ import kakao from "../../assets/images/kakao.png";
 import naver from "../../assets/images/naver.png";
 
 const RecommendationRight = ({ result, comment, onShare }) => (
-  <div className="flex flex-col h-full">
-    <div className="absolute top-12">
-      <div className="text-3xl font-bold mb-5">GPT 요약</div>
-      <div className="mb-5 text-xl flex-grow pr-20">
-        {comment} 🤖
-      </div>
+  <div className="w-full lg:w-3/5 flex flex-col justify-between lg:items-start items-center h-full p-2 lg:p-5">
+    <div className="text-2xl lg:text-3xl font-bold mb-2 lg:mb-5">👀 GPT 요약</div>
+    <div className="mb-5 text-lg text-center lg:text-xl lg:text-left flex-grow">
+      {comment} 🤖
     </div>
-    <div className="absolute bottom-3 flex gap-3 mt-auto">
+    <div className="flex gap-3 mt-auto">
       <a href="https://naver.com">
         <img src={table} alt="Table" className="w-8 h-8" />
       </a>

@@ -15,6 +15,13 @@ const Search = ({ onNormalMode }) => {
         return;
       }
       const result = await searchAddress(searchTerm);
+
+      // TODO: change the alert message to a toast message
+      if(result.documents.length === 0) {
+        alert("검색 결과가 없습니다.");
+        return;
+      }
+      
       setResults(result.documents);
     } catch(error) {
       // TODO: change the alert message to a toast message
