@@ -5,10 +5,22 @@ import close from "../../assets/images/close.png";
 import kakao from "../../assets/images/kakao_48.png";
 import share from "../../assets/images/share_48.png";
 
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Share = ({ onClose }) => {
   const handleCopyURL = () => {
-    // TODO: change the alert message to a toast message
-    alert("URL이 복사되었습니다.");
+    toast.info('URL 복사 완료!', {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });  
   }
 
   const handleKakaoShare = () => {
@@ -64,6 +76,7 @@ export const Share = ({ onClose }) => {
           </div>
         </div>
       </div>
+      <ToastContainer icon={false} />
     </div>
   );
 };

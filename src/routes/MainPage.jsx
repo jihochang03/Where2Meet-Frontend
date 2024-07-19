@@ -8,6 +8,9 @@ import Search from '../components/Search/Search';
 import keywordsData from '../data/keywords';
 import resultsData from '../data/results';
 
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const MainPage = ({ setResults }) => {
   // set True when StartPoint is clicked
   const [isSearchMode, setIsSearchMode] = useState(false);
@@ -36,8 +39,17 @@ const MainPage = ({ setResults }) => {
 
   const handleAddStartPoint = () => {
     if(startPoints.length >= 5) {
-      // TODO: change the alert message to a toast message
-      alert("최대 5개의 출발지까지만 추가할 수 있습니다.");
+      toast.error('최대 5개의 출발지 추가 가능!', {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });        
       return;
     }
     setStartPoints([
@@ -54,8 +66,17 @@ const MainPage = ({ setResults }) => {
   }
   const handleDeleteStartPoint = (id) => {
     if (startPoints.length <= 2) {
-      // TODO: change the alert message to a toast message
-      alert("최소 2개의 출발지가 필요합니다.");
+      toast.error('최소 2개의 출발지 필요!', {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });        
       return;
     }
     setStartPoints(startPoints.filter(point => point.id !== id));
@@ -114,6 +135,7 @@ const MainPage = ({ setResults }) => {
         </div>
       )}
       {!isSearchMode && <Logo />}
+      <ToastContainer />
     </div>
   );
 };
