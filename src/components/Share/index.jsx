@@ -10,9 +10,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const Share = ({ onClose }) => {
   const [visible, setVisible] = useState(false);
+  const [shareText, setShareText] = useState('');
 
   useEffect(() => {
     setVisible(true);
+
+    // set shareText with the actual data
+    setShareText(
+`우리의 만남 장소는 서울대입구역 입니다! 
+~~~~ 가 좋아요
+🚶‍♀️함께 가실래요?🚶‍♂️
+직접 해보기 👉 https://where2meet.com/`);
   }, []);
 
   const handleCopyURL = () => {
@@ -53,7 +61,7 @@ export const Share = ({ onClose }) => {
             공유하기
           </div>
           <div className="text-black text-center truncate" style={{ maxWidth: '100%' }}>
-            https://where2meet/result?x1=126.952713197762&y1=37.4812845080678&x2=126.952713197762&y2=37.4812845080678&x3=126.952713197762&y3=37.4812845080678
+            👇친구에게 공유해보아요👇
           </div>
         </div>
         <div className="flex justify-around items-center mt-8">
@@ -77,11 +85,11 @@ export const Share = ({ onClose }) => {
               src={share}
             />
             <CopyToClipboard
-              text="https://where2meet/hehe/com"
+              text={shareText}
               onCopy={handleCopyURL}
             >
               <button className="bg-[#2c2c2c] text-white py-2 rounded w-24 sm:w-32">
-                URL 복사
+                결과 복사
               </button>
             </CopyToClipboard>
           </div>
