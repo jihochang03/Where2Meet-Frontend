@@ -8,11 +8,11 @@ const RecommendationRight = ({ result, comment, onShare }) => (
   <div className="flex flex-col h-full">
     <div className="absolute top-12">
       <div className="text-3xl font-bold mb-5">GPT 요약</div>
-      <div className="mb-5 text-xl flex-grow pr-2">
-        {comment}
+      <div className="mb-5 text-xl flex-grow pr-20">
+        {comment} 🤖
       </div>
     </div>
-    <div className="absolute bottom-3 flex gap-2 mt-auto">
+    <div className="absolute bottom-3 flex gap-3 mt-auto">
       <a href="https://naver.com">
         <img src={table} alt="Table" className="w-8 h-8" />
       </a>
@@ -22,7 +22,7 @@ const RecommendationRight = ({ result, comment, onShare }) => (
       <a href="https://naver.com">
         <img src={naver} alt="Naver" className="w-8 h-8" />
       </a>
-      <button className="bg-blue-500 text-white h-10 min-w-fit px-2 py-1 rounded">
+      <button className="bg-blue-500 text-white h-8 min-w-fit px-2 py-1 rounded">
         <a
           href={`https://map.kakao.com/link/to/${result["station_name"]},${result["coordinates"]["y"]},${result["coordinates"]["x"]}`}
         >
@@ -30,7 +30,7 @@ const RecommendationRight = ({ result, comment, onShare }) => (
         </a>
       </button>
       <button
-        className="bg-green-500 text-white h-10 min-w-fit px-2 py-1 rounded"
+        className="bg-green-500 text-white h-8 min-w-fit px-2 py-1 rounded"
         onClick={onShare}
       >
         공유하기

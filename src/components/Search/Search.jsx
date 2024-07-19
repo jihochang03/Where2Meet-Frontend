@@ -9,9 +9,15 @@ const Search = ({ onNormalMode }) => {
 
   const handleSearch = async () => {
     try {
+      if(searchTerm === '') {
+        // TODO: change the alert message to a toast message
+        alert("검색어를 입력해주세요.");
+        return;
+      }
       const result = await searchAddress(searchTerm);
       setResults(result.documents);
     } catch(error) {
+      // TODO: change the alert message to a toast message
       alert("검색 결과를 불러오는 중 오류가 발생했습니다.");
     }
   };

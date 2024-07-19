@@ -36,6 +36,7 @@ const MainPage = ({ setResults }) => {
 
   const handleAddStartPoint = () => {
     if(startPoints.length >= 5) {
+      // TODO: change the alert message to a toast message
       alert("최대 5개의 출발지까지만 추가할 수 있습니다.");
       return;
     }
@@ -53,6 +54,7 @@ const MainPage = ({ setResults }) => {
   }
   const handleDeleteStartPoint = (id) => {
     if (startPoints.length <= 2) {
+      // TODO: change the alert message to a toast message
       alert("최소 2개의 출발지가 필요합니다.");
       return;
     }

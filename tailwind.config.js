@@ -15,6 +15,9 @@ module.exports = {
       fontFamily: {
         "single-line-body-base": "var(--single-line-body-base-font-family)",
       },
+      screens: {
+        pointerhover: { 'raw': '(hover: hover) and (pointer: fine)' },
+      },
     },
   },
   plugins: [],
