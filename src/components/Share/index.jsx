@@ -44,23 +44,13 @@ ${gptComment}🚶🚶‍♂️`);
         Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
       }
 
-      Kakao.Share.sendDefault({
-        objectType: 'text',
-        text:
-          shareText,
-        link: {
-          mobileWebUrl: 'https://www.where2meet.site/',
-          webUrl: 'https://www.where2meet.site/',
+      Kakao.Share.sendCustom({
+        templateId: 110250,
+        templateArgs: {
+          'title': `우리의 만남 장소는 ✨${result['station_name']}✨입니다!`,
+          'description': `${gptComment}🚶🚶‍♂️`,
+          'station': result['station_name'],
         },
-        buttons: [
-          {
-            title: '나도 하러가기👉',
-            link: {
-              mobileWebUrl: 'https://www.where2meet.site/',
-              webUrl: 'https://www.where2meet.site/',
-            }
-          },
-        ],
       });
     }
   }
