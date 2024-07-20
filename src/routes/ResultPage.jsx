@@ -55,7 +55,7 @@ const ResultPage = ({ results, setResults }) => {
         <Recommendation results={results} gptComments={gptComments} selected={selected} setSelected={setSelected} onShare={() => setShareMode(true)} />
       )}
       {shareMode && (
-        <Share onClose={() => setShareMode(false)} />
+        <Share onClose={() => setShareMode(false)} gptComment={gptComments[selected-1]} result={results[selected-1]} />
       )}
       <div className="absolute left-5 z-10">
         <Button text="다시하기" onClick={handleBackToMain} />

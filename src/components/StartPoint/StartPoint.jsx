@@ -23,6 +23,7 @@ const StartPoint = ({ point, isLast, onAddPoint, onDeletePoint, onSearchMode }) 
           placeholder="출발 장소 입력하기"
           className="w-full h-full bg-transparent outline-none text-[#363131] text-lg cursor-pointer text-ellipsis"
           onClick={() => {onSearchMode(point.id)}}
+          readOnly
         />
       )}
       {isLast ? <img src={addpoint} alt="Add Point" className="w-6 h-6 ml-2 cursor-pointer" onClick={onAddPoint} />

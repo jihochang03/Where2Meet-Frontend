@@ -39,7 +39,7 @@ const MainPage = ({ setResults }) => {
 
   const handleAddStartPoint = () => {
     if(startPoints.length >= 5) {
-      toast.error('최대 5개의 출발지 추가 가능!', {
+      toast.error('최대 5개의 출발지 추가 가능❗', {
         position: "top-left",
         autoClose: 1500,
         hideProgressBar: false,
@@ -66,7 +66,7 @@ const MainPage = ({ setResults }) => {
   }
   const handleDeleteStartPoint = (id) => {
     if (startPoints.length <= 2) {
-      toast.error('최소 2개의 출발지 필요!', {
+      toast.error('최소 2개의 출발지 필요❗', {
         position: "top-left",
         autoClose: 1500,
         hideProgressBar: false,
