@@ -13,7 +13,7 @@ const StartPoint = ({ point, isLast, onAddPoint, onDeletePoint, onSearchMode }) 
     />
     <div className={`flex-1 flex items-center h-10 p-2.5 ${isLast ? 'bg-blue-100' : 'bg-white'} rounded-[5px]`}>
       {isLast ? (
-        <div className="w-full h-full bg-transparent text-[#363131] text-lg flex items-center">
+        <div className="w-full h-full bg-transparent text-[#363131] text-lg flex items-center cursor-pointer" onClick={onAddPoint}>
           경로 추가
         </div>
       ) : (

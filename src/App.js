@@ -6,17 +6,24 @@ import ResultPage from './routes/ResultPage';
 import './App.css';
 
 const App = () => {
-  const [results, setResults] = useState([]);
-  const [startPoints, setStartPoints] = useState([
-    { id: 1, place_name: '', road_address_name: '', lon: '', lat: '' },
-    { id: 2, place_name: '', road_address_name: '', lon: '', lat: '' },
-  ]);
+  const [results, setResults] = useState(() => {
+    const savedResults = localStorage.getItem('results');
+    return savedResults ? JSON.parse(savedResults) : [];
+  });
+  const [startPoints, setStartPoints] = useState(() => {
+    const savedStartPoints = localStorage.getItem('startPoints');
+    return savedStartPoints ? JSON.parse(savedStartPoints) : [];
+  });
+  const [comments, setComments] = useState(() => {
+    const savedComments = localStorage.getItem('comments');
+    return savedComments ? JSON.parse(savedComments) : [];
+  });
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage setResults={setResults} startPoints={startPoints} setStartPoints={setStartPoints} />} />
-        <Route path="/result" element={<ResultPage results={results} setResults={setResults} startPoints={startPoints} />} />
+        <Route path="/" element={<MainPage setResults={setResults} setComments={setComments} setStartPoints={setStartPoints} />} />
+        <Route path="/result" element={<ResultPage results={results} comments={comments} startPoints={startPoints} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
