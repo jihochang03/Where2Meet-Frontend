@@ -122,7 +122,7 @@ const MainPage = ({ setResults }) => {
   return (
     <div className="bg-white flex flex-row justify-center w-full h-screen">
       {isSearchMode ? (
-        <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex justify-center items-center p-8">
+        <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex justify-center items-center p-4 md:p-8">
           <Search onNormalMode={handleNormalMode} />
         </div>
       ) : (
