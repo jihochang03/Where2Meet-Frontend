@@ -11,16 +11,12 @@ import resultsData from '../data/results';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const MainPage = ({ setResults }) => {
+const MainPage = ({ setResults, startPoints, setStartPoints }) => {
   // set True when StartPoint is clicked
   const [isSearchMode, setIsSearchMode] = useState(false);
   // StartPoint id to be searched
   const [searchTarget, setSearchTarget] = useState(0);
   // store StartPoint data
-  const [startPoints, setStartPoints] = useState([
-    { id: 1, place_name: '', road_address_name: '', x: '', y: '' },
-    { id: 2, place_name: '', road_address_name: '', x: '', y: '' },
-  ]);
   const [startPointNum, setStartPointNum] = useState(2);
   // keyword 
   const [keywords, setKeywords] = useState(keywordsData);
@@ -30,6 +26,7 @@ const MainPage = ({ setResults }) => {
   const navigate = useNavigate();
   const handleFindMeetingPlace = () => {
     // TODO: POST request to the server
+    // check if every startPoints have valid lon, lat values
     // resultsData is a dummy data now, so it should be replaced with the actual data from the server
 
     setResults(resultsData);
@@ -58,8 +55,8 @@ const MainPage = ({ setResults }) => {
         id: startPointNum + 1,
         place_name: '',
         road_address_name: '',
-        x: '',
-        y: '',
+        lon: '',
+        lat: '',
       }
     ]);
     setStartPointNum(startPointNum + 1);
@@ -106,8 +103,8 @@ const MainPage = ({ setResults }) => {
             ...point,
             place_name: selected.place_name,
             road_address_name: selected.road_address_name,
-            x: selected.x,
-            y: selected.y,
+            lon: selected.x,
+            lat: selected.y,
           };
         }
         return point;
@@ -122,7 +119,7 @@ const MainPage = ({ setResults }) => {
   return (
     <div className="bg-white flex flex-row justify-center w-full h-screen">
       {isSearchMode ? (
-        <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex justify-center items-center p-8">
+        <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex justify-center items-center p-4 md:p-8">
           <Search onNormalMode={handleNormalMode} />
         </div>
       ) : (

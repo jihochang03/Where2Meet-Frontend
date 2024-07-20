@@ -9,11 +9,12 @@ import Button from '../components/Button';
 
 const { kakao } = window
 
-const ResultPage = ({ results, setResults }) => {
+const ResultPage = ({ results, setResults, startPoints }) => {
   const [selected, setSelected] = useState(1);
   const [gptComments, setGptComments] = useState([]);
   const [shareMode, setShareMode] = useState(false);
   const navigate = useNavigate();
+  var map; // kakaomap
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -21,29 +22,45 @@ const ResultPage = ({ results, setResults }) => {
       center: new kakao.maps.LatLng(37.5665, 126.9780),
       level: 3,
     };
-    new kakao.maps.Map(container, options);
+    map =new kakao.maps.Map(container, options);
 
-    if(results.length === 0) {
-      // TODO: url param에서 가져온 정보로 results 세팅
-      // URL에 담아야 할 것들: startpoints들의 x,y 좌표 / 결과 역 이름 3개 / factor들
+    // if(results.length === 0 || startPoints.length === 0) {
+    //   navigate('/');  
+    // }
+    // 일단 서버 연결하기 전이므로 Dummy Data 가져옴
+    setResults(resultsData);
+    setGptComments(comments);
 
-      // TODO: url param에 유효한 정보가 없는 경우
-      // alert 창 뜨면서, 메인 페이지로 redirect
-
-      // 일단 임시로 dummy data 가져옴
-      setResults(resultsData);
-    }
+    showMarker();
   }, []);
 
   useEffect(() => {
-    if (results.length === 0) return;
+    showMarker();
+  }, [selected]);
 
-    // TODO: get GPT comments from server
+  const showMarker = () => {
+    var points = [];
+    for(let i=0; i<startPoints.length; i++) {
+      points.push(new kakao.maps.LatLng(parseFloat(startPoints[i].lat), parseFloat(startPoints[i].lon)));
+    }
 
-    // 일단 임시로 dummy data 가져옴
-    setGptComments(comments);
-  }, [results]);
- 
+    var bounds = new kakao.maps.LatLngBounds();
+
+    for(let i=0; i<points.length; i++) {
+      var imageSize = new kakao.maps.Size(24,35);
+      var markerImage = new kakao.maps.MarkerImage('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', imageSize);
+      var marker = new kakao.maps.Marker({
+        map: map,
+        image: markerImage,
+        position: points[i]
+      });
+
+      bounds.extend(points[i]);
+    }
+
+    map.setBounds(bounds);
+  }
+
   const handleBackToMain = () => {
     navigate('/'); // Navigate to the main page route ('/')
   };

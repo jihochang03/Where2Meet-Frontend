@@ -52,6 +52,27 @@ const Search = ({ onNormalMode }) => {
         });  
         return;
       }
+
+      // filter only if road_address_name starts with '서울' or '경기'
+      result.documents = result.documents.filter((doc) => {
+        if(doc.road_address_name.substring(0, 2) === '서울' || doc.road_address_name.substring(0, 2) === '경기')
+          return doc;
+      })
+
+      if(result.documents.length === 0) {
+        toast.info('아직은 서울/경기 지역만 가능해요🥹', {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });  
+        return;
+      }
       
       setResults(result.documents);
     } catch(error) {
@@ -70,7 +91,7 @@ const Search = ({ onNormalMode }) => {
   };
 
   return (
-    <div className={`flex flex-col w-full h-full bg-[#9EA9B7] p-8 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`flex flex-col w-full h-full bg-[#9EA9B7] p-6 md:p-8 transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}>
       <SearchInput
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
