@@ -3,7 +3,7 @@ import { searchAddress } from '../../apis/api';
 import SearchInput from './SearchInput';
 import SearchOutputGroup from './SearchOutputGroup';
 
-import { ToastContainer, toast, Slide } from 'react-toastify';
+import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Search = ({ onNormalMode }) => {
@@ -101,7 +101,6 @@ const Search = ({ onNormalMode }) => {
       <div className="mt-4 flex-grow overflow-auto">
         <SearchOutputGroup results={results} onClose={handleClose} />
       </div>
-      <ToastContainer icon={false} />
     </div>
   );
 };

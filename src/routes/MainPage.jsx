@@ -36,8 +36,7 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
   const handleFindMeetingPlace = () => {
     // check if every startPoints have valid lon, lat values
     for (const point of points) {
-      if (!point.lon || !point.lat) {
-        console.log('Incomplete start point:', point); 
+      if (!point.place_name || !point.road_address_name || !point.lon || !point.lat) {
         toast.error("출발지를 모두 입력해주세요❗", {
           position: "top-left",
           autoClose: 1500,
@@ -157,6 +156,7 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
 
   return (
     <div className="bg-white flex flex-row justify-center w-full h-screen">
+      <ToastContainer icon={false} />
       {isSearchMode ? (
         <div className="absolute w-full h-full top-0 left-0 rounded-md shadow-[0px_4px_4px_#00000040] [background:linear-gradient(180deg,rgb(193,219,229)_0%,rgb(197,210,229)_100%)] flex justify-center items-center p-4 md:p-8">
           <Search onNormalMode={handleNormalMode} />
@@ -171,8 +171,7 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
         </div>
       )}
       {!isSearchMode && <Logo />}
-      {isLoading && <LoadingScreen />} {/* 로딩 상태일 때 로딩 화면 표시 */}
-      <ToastContainer />
+      {isLoading && <LoadingScreen />}
     </div>
   );
 };
