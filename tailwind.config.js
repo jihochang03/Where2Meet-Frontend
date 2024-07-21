@@ -18,6 +18,20 @@ module.exports = {
       screens: {
         pointerhover: { 'raw': '(hover: hover) and (pointer: fine)' },
       },
+      keyframes: {
+        moveCart: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        fadePaw: {
+          '0%, 100%': { opacity: '0' },
+          '10%': { opacity: '1' },
+        },
+      },
+      animation: {
+        moveCart: 'moveCart 3s linear infinite',
+        fadePaw: 'fadePaw 2s linear infinite',
+      },
     },
   },
   plugins: [],

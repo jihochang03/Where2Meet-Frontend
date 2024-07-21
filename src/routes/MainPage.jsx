@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import StartPointGroup from '../components/StartPoint/StartPointGroup';
-import KeywordGroup from '../components/Keyword/KeywordGroup';
-import Button from '../components/Button';
-import Logo from '../components/Logo';
-import Search from '../components/Search/Search';
-import keywordsData from '../data/keywords';
-import results from '../data/results';
-import comments from '../data/gpt_comments';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import StartPointGroup from "../components/StartPoint/StartPointGroup";
+import KeywordGroup from "../components/Keyword/KeywordGroup";
+import Button from "../components/Button";
+import Logo from "../components/Logo";
+import Search from "../components/Search/Search";
+import LoadingScreen from "../components/Loading/Loading";
+import keywordsData from "../data/keywords";
+import results from "../data/results";
+import comments from "../data/gpt_comments";
 
-import { ToastContainer, toast, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainPage = ({ setResults, setComments, setStartPoints }) => {
   // set True when StartPoint is clicked
   const [isSearchMode, setIsSearchMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   // startPoints for MainPage (not stored in the localStorage)
   const [points, setPoints] = useState([
     { id: 1, place_name: '', road_address_name: '', lon: '', lat: '' },
@@ -32,9 +35,10 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
   const navigate = useNavigate();
   const handleFindMeetingPlace = () => {
     // check if every startPoints have valid lon, lat values
-    for(const point of points) {
-      if(point.lon === '' || point.lat === '') {
-        toast.error('출발지를 모두 입력해주세요❗', {
+    for (const point of points) {
+      if (!point.place_name || !point.road_address_name) {
+        console.log('Incomplete start point:', point); 
+        toast.error("출발지를 모두 입력해주세요❗", {
           position: "top-left",
           autoClose: 1500,
           hideProgressBar: false,
@@ -49,24 +53,25 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
       }
     }
 
-    // send startPoints, selectedKeywords to the server
+    setIsLoading(true); // 로딩 시작
 
-    // results is a dummy data now, so it should be replaced with the actual data from the server
-    // comments should be replaced with the actual data from the server
-
-    // set global states (results, comments, startPoints) for the ResultPage
-    setResults(results);
-    setComments(comments);
-    setStartPoints(points);
-
-    // save global states to the localStorage in case of page refresh
-    localStorage.setItem('startPoints', JSON.stringify(points));
-    localStorage.setItem('results', JSON.stringify(results));
-    localStorage.setItem('comments', JSON.stringify(comments));
+    setTimeout(() => {
+      setIsLoading(false); // 로딩 종료
+      // send startPoints, selectedKeywords to the server
+      // results is a dummy data now, so it should be replaced with the actual data from the server
+      // comments should be replaced with the actual data from the server
+      // set global states (results, comments, startPoints) for the ResultPage
+      setResults(results);
+      setComments(comments);
+      setStartPoints(points);
+      // save global states to the localStorage in case of page refresh
+      localStorage.setItem("startPoints", JSON.stringify(points));
+      localStorage.setItem("results", JSON.stringify(results));
+      localStorage.setItem("comments", JSON.stringify(comments));
 
     navigate('/result');
-  };
-
+  }, 4000);
+};
 
   const handleAddStartPoint = () => {
     if(points.length >= 5) {
@@ -166,6 +171,7 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
         </div>
       )}
       {!isSearchMode && <Logo />}
+      {isLoading && <LoadingScreen />} {/* 로딩 상태일 때 로딩 화면 표시 */}
       <ToastContainer />
     </div>
   );
