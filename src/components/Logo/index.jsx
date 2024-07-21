@@ -6,7 +6,7 @@ import '../../App.css';
 const Logo = () => (
   <div className="flex-grow relative flex justify-center items-center">
     <h1
-      className="hidden z-10 font-['Gugi'] lg:text-7xl lg:mt-24 md:text-5xl md:mt-16 md:block
+      className="hidden z-10 font-['Gugi'] xl:text-[110px] xl:mt-40 lg:text-7xl lg:mt-24 md:text-5xl md:mt-16 md:block
 font-normal text-transparent bg-clip-text bg-gradient-to-r from-logo-blue to-logo-black txt drop-shadow-md animate-wave"
     >
       <span>우</span>
