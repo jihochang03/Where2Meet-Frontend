@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const { Kakao } = window;
 
-export const Share = ({ onClose, result, gptComment }) => {
+export const Share = ({ onClose, result, comments }) => {
   const [visible, setVisible] = useState(false);
   const [shareText, setShareText] = useState('');
 
@@ -20,7 +20,7 @@ export const Share = ({ onClose, result, gptComment }) => {
     // set shareText with the actual data
     setShareText(
 `우리의 만남 장소는 ✨${result['station_name']}✨입니다! 
-${gptComment}🚶🚶‍♂️`);
+${comments}🚶🚶‍♂️`);
   }, []);
 
   const handleCopyContent = () => {
@@ -48,7 +48,7 @@ ${gptComment}🚶🚶‍♂️`);
         templateId: 110250,
         templateArgs: {
           'title': `우리의 만남 장소는 ✨${result['station_name']}✨입니다!`,
-          'description': `${gptComment}🚶🚶‍♂️`,
+          'description': `${comments}🚶🚶‍♂️`,
           'station': result['station_name'],
         },
       });
