@@ -25,7 +25,7 @@ const LoadingScreen = () => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-white bg-opacity-80 flex flex-col items-center justify-center z-50">
       <p className="text-xl md:text-2xl">장소 찾는 중...</p>
-      <img src={cats} className="w-2/3 md:w-1/3 animate-moveCart" />
+      <img src={cats} className="w-1/3 md:w-80 animate-moveCart" />
       <div className="block md:hidden">
         {renderFootprints(6)}
       </div>

@@ -173,7 +173,6 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
       )}
       {!isSearchMode && <Logo />}
       {isLoading && <LoadingScreen />}
-      <ToastContainer />
     </div>
   );
 };
