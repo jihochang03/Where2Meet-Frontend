@@ -11,6 +11,8 @@ module.exports = {
         "color-primitives-brand-800": "var(--color-primitives-brand-800)",
         "color-text-brand-on-brand": "var(--color-text-brand-on-brand)",
         "system-colors-overlays-default": "var(--system-colors-overlays-default)",
+        "logo-blue": "#0064FF",
+        "logo-black": "#202632"
       },
       fontFamily: {
         "single-line-body-base": "var(--single-line-body-base-font-family)",
