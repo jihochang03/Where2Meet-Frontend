@@ -37,7 +37,6 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
     // check if every startPoints have valid lon, lat values
     for (const point of points) {
       if (!point.place_name || !point.road_address_name) {
-        console.log('Incomplete start point:', point); 
         toast.error("출발지를 모두 입력해주세요❗", {
           position: "top-left",
           autoClose: 1500,

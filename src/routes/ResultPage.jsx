@@ -30,7 +30,6 @@ const ResultPage = ({ results, comments, startPoints }) => {
     
     // mark start points on the map
     startPoints.forEach(startPoint => {
-      console.log("startPoint: ", startPoint);
       const imageSize = new kakao.maps.Size(32, 32);
       const markerImage = new kakao.maps.MarkerImage('https://www.where2meet.site/images/flag_red.png', imageSize);
       new kakao.maps.Marker({
@@ -55,7 +54,6 @@ const ResultPage = ({ results, comments, startPoints }) => {
 
 
   const markFinalPointAndSetBounds = (map) => {
-    console.log("selected: ", results[selected-1]);
     const finalPoint = new kakao.maps.LatLng(results[selected-1].coordinates.lat, results[selected-1].coordinates.lon);
     const imageSize = new kakao.maps.Size(32, 32);
     const markerImage = new kakao.maps.MarkerImage('https://www.where2meet.site/images/flag_blue.png', imageSize);
