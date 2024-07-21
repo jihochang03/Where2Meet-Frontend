@@ -1,4 +1,4 @@
-import { backendInstance, kakaoInstance } from "./axios";
+import { backendInstance, kakaoInstance, odsayInstance } from "./axios";
 
 export const searchAddress = async (searchTerm) => {
   try {
@@ -18,5 +18,28 @@ export const searchAddress = async (searchTerm) => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export const searchPath = async (startX, startY, endX, endY) => {
+  try {
+    const api = process.env.REACT_APP_ODSAY_API_KEY;
+    const response = await odsayInstance.get('/searchPubTransPathT', {
+      params: {
+        SX: startX,
+        SY: startY,
+        EX: endX,
+        EY: endY,
+        apiKey: api,
+      }
+    });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 }

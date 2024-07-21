@@ -5,7 +5,7 @@ import close from "../../assets/images/close.png";
 import kakaoIcon from "../../assets/images/kakao_48.png";
 import share from "../../assets/images/share_48.png";
 
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const { Kakao } = window;
@@ -108,7 +108,6 @@ ${comments}🚶🚶‍♂️`);
           </div>
         </div>
       </div>
-      <ToastContainer icon={false} />
     </div>
   );
 };

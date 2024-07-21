@@ -14,6 +14,10 @@ const App = () => {
     const savedStartPoints = localStorage.getItem('startPoints');
     return savedStartPoints ? JSON.parse(savedStartPoints) : [];
   });
+  const [paths, setPaths] = useState(() => {
+    const savedPaths = localStorage.getItem('paths');
+    return savedPaths ? JSON.parse(savedPaths) : [];
+  })
   const [comments, setComments] = useState(() => {
     const savedComments = localStorage.getItem('comments');
     return savedComments ? JSON.parse(savedComments) : [];
@@ -22,8 +26,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage setResults={setResults} setComments={setComments} setStartPoints={setStartPoints} />} />
-        <Route path="/result" element={<ResultPage results={results} comments={comments} startPoints={startPoints} />} />
+        <Route path="/" element={<MainPage setResults={setResults} setComments={setComments} setStartPoints={setStartPoints} setPaths={setPaths} />} />
+        <Route path="/result" element={<ResultPage results={results} comments={comments} startPoints={startPoints} paths={paths} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

@@ -9,11 +9,12 @@ import LoadingScreen from "../components/Loading/Loading";
 import keywordsData from "../data/keywords";
 import results from "../data/results";
 import comments from "../data/gpt_comments";
+import { searchPath } from "../apis/api";
 
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const MainPage = ({ setResults, setComments, setStartPoints }) => {
+const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
   // set True when StartPoint is clicked
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +34,7 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
 
   
   const navigate = useNavigate();
-  const handleFindMeetingPlace = () => {
+  const handleFindMeetingPlace = async () => {
     // check if every startPoints have valid lon, lat values
     for (const point of points) {
       if (!point.place_name || !point.road_address_name || !point.lon || !point.lat) {
@@ -52,25 +53,65 @@ const MainPage = ({ setResults, setComments, setStartPoints }) => {
       }
     }
 
+    // send startPoints, selectedKeywords to the server
+
+    // results is a dummy data now, so it should be replaced with the actual data from the server
+    // comments should be replaced with the actual data from the server
+    // set global states (results, comments, startPoints) for the ResultPage
+    setResults(results);
+    setComments(comments);
+    setStartPoints(points);
+
+    // find paths using ODsay API
+    const paths = await handleFindPath(points, results);
+    setPaths(paths);
+
+    // save global states to the localStorage in case of page refresh
+    localStorage.setItem("startPoints", JSON.stringify(points));
+    localStorage.setItem("results", JSON.stringify(results));
+    localStorage.setItem("comments", JSON.stringify(comments));
+    localStorage.setItem("paths", JSON.stringify(paths));
+
     setIsLoading(true); // 로딩 시작
 
     setTimeout(() => {
       setIsLoading(false); // 로딩 종료
-      // send startPoints, selectedKeywords to the server
-      // results is a dummy data now, so it should be replaced with the actual data from the server
-      // comments should be replaced with the actual data from the server
-      // set global states (results, comments, startPoints) for the ResultPage
-      setResults(results);
-      setComments(comments);
-      setStartPoints(points);
-      // save global states to the localStorage in case of page refresh
-      localStorage.setItem("startPoints", JSON.stringify(points));
-      localStorage.setItem("results", JSON.stringify(results));
-      localStorage.setItem("comments", JSON.stringify(comments));
+      navigate('/result');
+    }, 3000);
+  };
 
-    navigate('/result');
-  }, 4000);
-};
+  // sometimes API fails due to 429 "Too Many Requests" error
+  // retry in this case
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const searchPathWithRetry = async (sx, sy, ex, ey, retries = 5, delayMs = 300) => {
+    for(let i = 0; i < retries; i++) {
+      const response = await searchPath(sx, sy, ex, ey);
+      if(response !== null && response.result) {
+        return response.result.path;
+      } else if(response !== null && response.error && response.error.code === "429") {
+        console.log("Too Many Requests. Retry in 100 ms...");
+        await delay(delayMs);
+      } else {
+        console.log(response);
+        return null;
+      }
+    }
+    return null;
+  }
+
+  const handleFindPath = async (points, results) => {
+    // make sure every path result is received
+    const paths = await Promise.all(results.map(async (result) => {
+      const selected_paths = await Promise.all(points.map(async (point) => {
+        const path = await searchPathWithRetry(point.lon, point.lat, result.coordinates.lon, result.coordinates.lat);
+        return path;
+      }));
+      return selected_paths;
+    }));
+    
+    console.log(paths);
+    return paths;
+  }
 
   const handleAddStartPoint = () => {
     if(points.length >= 5) {
