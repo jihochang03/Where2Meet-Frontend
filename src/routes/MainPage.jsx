@@ -60,9 +60,10 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     setResults(results);
     setComments(comments);
     setStartPoints(points);
-    
+
 
     // find paths using ODsay API
+    setIsLoading(true); // 로딩 시작
     const paths = await handleFindPath(points, results);
     setPaths(paths);
 
@@ -72,12 +73,9 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     localStorage.setItem("comments", JSON.stringify(comments));
     localStorage.setItem("paths", JSON.stringify(paths));
 
-    setIsLoading(true); // 로딩 시작
 
-    setTimeout(() => {
-      setIsLoading(false); // 로딩 종료
-      navigate('/result');
-    }, 3000);
+    setIsLoading(false); // 로딩 종료
+    navigate('/result');
   };
 
   // sometimes API fails due to 429 "Too Many Requests" error
