@@ -54,7 +54,6 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     }
 
     // send startPoints, selectedKeywords to the server
-
     // results is a dummy data now, so it should be replaced with the actual data from the server
     // comments should be replaced with the actual data from the server
     // set global states (results, comments, startPoints) for the ResultPage
