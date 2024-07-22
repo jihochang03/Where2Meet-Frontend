@@ -28,6 +28,7 @@ const SearchInput = ({ value, onChange, onClose, onSearch }) => {
         onKeyDown={(e) => e.key === 'Enter' && onSearch()}
         className="flex-grow px-4 py-2 text-lg bg-transparent border-none outline-none"
         style={{ minWidth: 0 }}
+        maxLength={30}
         placeholder="검색어를 입력하세요"
       />
       <img

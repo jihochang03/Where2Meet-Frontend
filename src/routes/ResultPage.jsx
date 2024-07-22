@@ -86,7 +86,7 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
   }
 
   const markPathOnMap = (map) => {
-    const color = ['#ff679a', '#00bbdc', '#ff7721', '#0077dd', '#33ccba']
+    const color = ['#ff679a', '#00bbdc', '#ff7721', '#0077dd', '#077000']
 
     for(let i=0; i<startPoints.length; i++) {
       if(paths[selected-1][i] === null) {
