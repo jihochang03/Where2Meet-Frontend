@@ -60,6 +60,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     setResults(results);
     setComments(comments);
     setStartPoints(points);
+    
 
     // find paths using ODsay API
     const paths = await handleFindPath(points, results);
