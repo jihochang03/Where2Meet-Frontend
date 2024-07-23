@@ -9,7 +9,7 @@ import LoadingScreen from "../components/Loading/Loading";
 import keywordsData from "../data/keywords";
 import results from "../data/results";
 import comments from "../data/gpt_comments";
-import { searchPath } from "../apis/api";
+import { searchPath, findBestStations, getComments } from "../apis/api";
 
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -53,6 +53,39 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       }
     }
 
+    // get index of selected keywords (among 2,3,4,5,6,7)
+    const sKeywords = [];
+    selectedKeywords.forEach((selected, index) => {
+      if(selected) sKeywords.push(index + 2);
+    });
+    const results_demo = await findBestStations(points, sKeywords);
+
+    if(results_demo === null) {
+      toast.error("만남 장소를 찾는데 실패했어요😞", {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+      return;
+    }
+
+    console.log(results_demo);
+
+    const comments_demo = [];
+    for(const result of results_demo) {
+      const comment = await getComments(result.station_name, sKeywords);
+      comments_demo.push(comment === null ? "GPT 요약을 불러오는데 실패했어요😞" : comment);
+    }
+
+    console.log(comments_demo);
+
+
     // send startPoints, selectedKeywords to the server
     // results is a dummy data now, so it should be replaced with the actual data from the server
     // comments should be replaced with the actual data from the server
@@ -87,7 +120,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       if(response !== null && response.result) {
         return response.result.path;
       } else if(response !== null && response.error && response.error.code === "429") {
-        console.log("Too Many Requests. Retry in 100 ms...");
+        console.log("Too Many Requests. Retry in 300 ms...");
         await delay(delayMs);
       } else {
         console.log(response);

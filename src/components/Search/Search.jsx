@@ -37,7 +37,20 @@ const Search = ({ onNormalMode }) => {
         return;
       }
       const result = await searchAddress(searchTerm);
-
+      if(result === null) {
+        toast.error('검색에 실패했어요😞', {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });  
+        return;
+      }
       if(result.documents.length === 0) {
         toast.info('검색 결과가 없네요🥹', {
           position: "top-left",
