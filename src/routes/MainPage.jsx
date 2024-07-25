@@ -74,6 +74,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
         theme: "light",
         transition: Slide,
       });
+      setIsLoading(false); // 로딩 종료
       return;
     }
     console.log(results);
