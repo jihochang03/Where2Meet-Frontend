@@ -7,10 +7,13 @@ import naver from "../../assets/images/naver.png";
 const RecommendationRight = ({ result, comment, onShare }) => (
   <div className="w-full lg:w-3/5 flex flex-col justify-between lg:items-start items-center h-full p-2 lg:p-5">
     <div className="text-2xl lg:text-3xl font-bold mb-2 lg:mb-5">
-      👀 GPT 요약
+      🤖 GPT 요약
     </div>
-    <div className="mb-5 text-lg text-center lg:text-xl lg:text-left flex-grow">
-      {comment} 🤖
+    <div className="lg:hidden mb-5 text-lg text-center lg:text-xl lg:text-left flex-grow">
+      {comment['chatgpt_response_mobile']} 
+    </div>
+    <div className="hidden lg:block mb-5 text-lg text-center lg:text-xl lg:text-left flex-grow">
+      {comment['chatgpt_response_pc']} 
     </div>
     <div className="flex gap-3 mt-auto">
       <a
@@ -28,7 +31,7 @@ const RecommendationRight = ({ result, comment, onShare }) => (
       </a>
       <button className="bg-blue-500 text-white h-8 min-w-fit px-2 py-1 rounded">
         <a
-          href={`https://map.kakao.com/link/to/${result["station_name"]},${result["coordinates"]["y"]},${result["coordinates"]["x"]}`}
+          href={`https://map.kakao.com/link/to/${result["station_name"]},${result["coordinates"]["lon"]},${result["coordinates"]["lat"]}`}
         >
           길찾기
         </a>

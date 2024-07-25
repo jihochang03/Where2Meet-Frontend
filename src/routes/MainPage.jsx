@@ -7,9 +7,7 @@ import Logo from "../components/Logo";
 import Search from "../components/Search/Search";
 import LoadingScreen from "../components/Loading/Loading";
 import keywordsData from "../data/keywords";
-import results from "../data/results";
-import comments from "../data/gpt_comments";
-import { searchPath, findBestStations, getComments } from "../apis/api";
+import { searchPath, findBestStations } from "../apis/api";
 
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,9 +56,12 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     selectedKeywords.forEach((selected, index) => {
       if(selected) sKeywords.push(index + 2);
     });
-    const results_demo = await findBestStations(points, sKeywords);
+    
 
-    if(results_demo === null) {
+    setIsLoading(true); // 로딩 시작
+
+    const results = await findBestStations(points, sKeywords);
+    if(results === null) {
       toast.error("만남 장소를 찾는데 실패했어요😞", {
         position: "top-left",
         autoClose: 1500,
@@ -74,17 +75,21 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       });
       return;
     }
+    console.log(results);
 
-    console.log(results_demo);
-
-    const comments_demo = [];
-    for(const result of results_demo) {
-      const comment = await getComments(result.station_name, sKeywords);
-      comments_demo.push(comment === null ? "GPT 요약을 불러오는데 실패했어요😞" : comment);
+    const comments = [];
+    for(const result of results) {
+      comments.push(result.chatgpt_response_mobile.error || result.chatgpt_response_pc.error ? 
+        {
+          chatgpt_response_mobile: `[GPT 호출 실패😞] ${result.station_name}은(는) 최고의 모임 장소에요✨`,
+          chatgpt_response_pc: `[GPT 호출 실패😞] ${result.station_name}은(는) 최고의 모임 장소에요🎈`,
+        }
+        :
+        {
+          chatgpt_response_mobile: result.chatgpt_response_mobile.response,
+          chatgpt_response_pc: result.chatgpt_response_pc.response,
+        });
     }
-
-    console.log(comments_demo);
-
 
     // send startPoints, selectedKeywords to the server
     // results is a dummy data now, so it should be replaced with the actual data from the server
@@ -94,9 +99,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     setComments(comments);
     setStartPoints(points);
 
-
     // find paths using ODsay API
-    setIsLoading(true); // 로딩 시작
     const paths = await handleFindPath(points, results);
     setPaths(paths);
 

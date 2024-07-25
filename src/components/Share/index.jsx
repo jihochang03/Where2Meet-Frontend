@@ -20,7 +20,8 @@ export const Share = ({ onClose, result, comments }) => {
     // set shareText with the actual data
     setShareText(
 `우리의 만남 장소는 ✨${result['station_name']}✨입니다! 
-${comments}🚶🚶‍♂️`);
+${comments['chatgpt_response_mobile']}🚶🚶‍♂️
+나도 해보기👉https://www.where2meet.site/`);
   }, []);
 
   const handleCopyContent = () => {
@@ -48,7 +49,7 @@ ${comments}🚶🚶‍♂️`);
         templateId: 110250,
         templateArgs: {
           'title': `우리의 만남 장소는 ✨${result['station_name']}✨입니다!`,
-          'description': `${comments}🚶🚶‍♂️`,
+          'description': `${comments['chatgpt_response_mobile']}🚶🚶‍♂️`,
           'station': result['station_name'],
         },
       });

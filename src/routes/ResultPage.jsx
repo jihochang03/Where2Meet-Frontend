@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Recommendation from '../components/Recommendation/Recommendation';
 import Share from '../components/Share';
 import Button from '../components/Button';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 const { kakao } = window
 
@@ -18,20 +18,6 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
       // no results or startPoints (maybe cache cleared?)
       navigate('/');  
     }
-    // if(paths.length === 0) {
-    //   // no paths (maybe cache cleared)
-    //   toast.info('경로를 표시하는데 실패했어요❗', {
-    //     position: "top-center",
-    //     autoClose: 1500,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: false,
-    //     progress: undefined,
-    //     theme: "light",
-    //     transition: Bounce,
-    //   }); 
-    // }
     
     // render map
     const map = renderMap();
@@ -87,6 +73,7 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
 
   const markPathOnMap = (map) => {
     const color = ['#ff679a', '#00bbdc', '#ff7721', '#0077dd', '#077000']
+    var failed = false;
 
     for(let i=0; i<startPoints.length; i++) {
       if(paths[selected-1][i] === null) {
@@ -103,6 +90,7 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
           strokeStyle: 'solid',
         });
         polyline.setMap(map);
+        failed = true;
         continue;
       }
 
@@ -162,6 +150,20 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
         });
         polyline.setMap(map);
       });
+    }
+
+    if(failed) {
+      toast.info('경로 표시 실패❗일부 경로가 직선으로 표시돼요🙃', {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      }); 
     }
   }
 
