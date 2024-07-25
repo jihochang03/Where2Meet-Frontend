@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Logo from "../components/Logo";
 import Search from "../components/Search/Search";
 import LoadingScreen from "../components/Loading/Loading";
+import SplashScreen from "../components/Loading/Splash";
 import keywordsData from "../data/keywords";
 import { searchPath, findBestStations } from "../apis/api";
 
@@ -245,6 +246,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
           </div>
         </div>
       )}
+      <SplashScreen />
       {!isSearchMode && <Logo />}
       {isLoading && <LoadingScreen />}
     </div>
