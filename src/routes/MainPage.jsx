@@ -6,13 +6,14 @@ import Button from "../components/Button";
 import Logo from "../components/Logo";
 import Search from "../components/Search/Search";
 import LoadingScreen from "../components/Loading/Loading";
+import SplashScreen from "../components/Loading/Splash";
 import keywordsData from "../data/keywords";
 import { searchPath, findBestStations } from "../apis/api";
 
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
+const MainPage = ({ setResults, setComments, setStartPoints }) => {
   // set True when StartPoint is clicked
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
 
   
   const navigate = useNavigate();
-  const handleFindMeetingPlace = async () => {
+  const handleFindMeetingPlace = () => {
     // check if every startPoints have valid lon, lat values
     for (const point of points) {
       if (!point.place_name || !point.road_address_name || !point.lon || !point.lat) {
@@ -56,12 +57,9 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     selectedKeywords.forEach((selected, index) => {
       if(selected) sKeywords.push(index + 2);
     });
-    
+    const results_demo = await findBestStations(points, sKeywords);
 
-    setIsLoading(true); // 로딩 시작
-
-    const results = await findBestStations(points, sKeywords);
-    if(results === null) {
+    if(results_demo === null) {
       toast.error("만남 장소를 찾는데 실패했어요😞", {
         position: "top-left",
         autoClose: 1500,
@@ -75,21 +73,17 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       });
       return;
     }
-    console.log(results);
 
-    const comments = [];
-    for(const result of results) {
-      comments.push(result.chatgpt_response_mobile.error || result.chatgpt_response_pc.error ? 
-        {
-          chatgpt_response_mobile: `[GPT 호출 실패😞] ${result.station_name}은(는) 최고의 모임 장소에요✨`,
-          chatgpt_response_pc: `[GPT 호출 실패😞] ${result.station_name}은(는) 최고의 모임 장소에요🎈`,
-        }
-        :
-        {
-          chatgpt_response_mobile: result.chatgpt_response_mobile.response,
-          chatgpt_response_pc: result.chatgpt_response_pc.response,
-        });
+    console.log(results_demo);
+
+    const comments_demo = [];
+    for(const result of results_demo) {
+      const comment = await getComments(result.station_name, sKeywords);
+      comments_demo.push(comment === null ? "GPT 요약을 불러오는데 실패했어요😞" : comment);
     }
+
+    console.log(comments_demo);
+
 
     // send startPoints, selectedKeywords to the server
     // results is a dummy data now, so it should be replaced with the actual data from the server
@@ -99,7 +93,9 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     setComments(comments);
     setStartPoints(points);
 
+
     // find paths using ODsay API
+    setIsLoading(true); // 로딩 시작
     const paths = await handleFindPath(points, results);
     setPaths(paths);
 
@@ -110,42 +106,9 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
     localStorage.setItem("paths", JSON.stringify(paths));
 
 
-    setIsLoading(false); // 로딩 종료
     navigate('/result');
-  };
-
-  // sometimes API fails due to 429 "Too Many Requests" error
-  // retry in this case
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const searchPathWithRetry = async (sx, sy, ex, ey, retries = 5, delayMs = 300) => {
-    for(let i = 0; i < retries; i++) {
-      const response = await searchPath(sx, sy, ex, ey);
-      if(response !== null && response.result) {
-        return response.result.path;
-      } else if(response !== null && response.error && response.error.code === "429") {
-        console.log("Too Many Requests. Retry in 300 ms...");
-        await delay(delayMs);
-      } else {
-        console.log(response);
-        return null;
-      }
-    }
-    return null;
-  }
-
-  const handleFindPath = async (points, results) => {
-    // make sure every path result is received
-    const paths = await Promise.all(results.map(async (result) => {
-      const selected_paths = await Promise.all(points.map(async (point) => {
-        const path = await searchPathWithRetry(point.lon, point.lat, result.coordinates.lon, result.coordinates.lat);
-        return path;
-      }));
-      return selected_paths;
-    }));
-    
-    console.log(paths);
-    return paths;
-  }
+  }, 4000);
+};
 
   const handleAddStartPoint = () => {
     if(points.length >= 5) {
@@ -245,6 +208,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
           </div>
         </div>
       )}
+      <SplashScreen />
       {!isSearchMode && <Logo />}
       {isLoading && <LoadingScreen />}
     </div>

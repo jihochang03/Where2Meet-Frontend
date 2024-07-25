@@ -64,3 +64,15 @@ body {
 .txt span:nth-of-type(7) {
   animation-delay: 0.6s;
 }
+
+/* Hide splash screen by default */
+.splash-screen {
+  display: none;
+}
+
+/* Show splash screen only on mobile devices */
+@media (max-width: 768px) {
+  .splash-screen {
+    display: flex;
+  }
+}
