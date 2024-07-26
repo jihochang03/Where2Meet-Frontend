@@ -17,7 +17,7 @@ const RecommendationRight = ({ result, comment, onShare }) => (
     </div>
     <div className="flex gap-3 mt-auto">
       <a
-        href={`https://app.catchtable.co.kr/ct/search/total?query=${result["station_name"]}`} target="_blank"
+        href={`https://app.catchtable.co.kr/ct/map/COMMON?showTabs=true&bottomSheetHeightType=PARTIAL_MAP&serviceType=INTEGRATION&keyword=${result["station_name"]}&keywordSearch=${result["station_name"]}`} target="_blank"
       >
         <img src={table} alt="Table" className="w-8 h-8" />
       </a>
