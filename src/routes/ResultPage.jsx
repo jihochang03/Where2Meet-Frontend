@@ -183,7 +183,7 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
         <Share onClose={() => setShareMode(false)} comments={comments[selected-1]} result={results[selected-1]} />
       )}
       <div className="absolute left-5 z-10">
-        <Button text="다시하기" onClick={handleBackToMain} />
+        <Button text="처음으로 🏠" onClick={handleBackToMain} />
       </div>
     </div>
   );
