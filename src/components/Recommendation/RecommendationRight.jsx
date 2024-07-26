@@ -17,15 +17,15 @@ const RecommendationRight = ({ result, comment, onShare }) => (
     </div>
     <div className="flex gap-3 mt-auto">
       <a
-        href={`https://app.catchtable.co.kr/ct/search/total?query=${result["station_name"]}`}
+        href={`https://app.catchtable.co.kr/ct/search/total?query=${result["station_name"]}`} target="_blank"
       >
         <img src={table} alt="Table" className="w-8 h-8" />
       </a>
-      <a href={`https://map.kakao.com/link/search/${result["station_name"]}`}>
+      <a href={`https://map.kakao.com/link/search/${result["station_name"]}`} target="_blank">
         <img src={kakao} alt="Kakao" className="w-8 h-8" />
       </a>
       <a
-        href={`https://map.naver.com/p/search/${result["station_name"]}?c=15.00,0,0,0,dh`}
+        href={`https://map.naver.com/p/search/${result["station_name"]}?c=15.00,0,0,0,dh `} target="_blank"
       >
         <img src={naver} alt="Naver" className="w-8 h-8" />
       </a>
