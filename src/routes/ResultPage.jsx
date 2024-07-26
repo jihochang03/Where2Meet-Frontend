@@ -73,7 +73,6 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
 
   const markPathOnMap = (map) => {
     const color = ['#ff679a', '#00bbdc', '#ff7721', '#0077dd', '#077000']
-    var failed = false;
 
     for(let i=0; i<startPoints.length; i++) {
       if(paths[selected-1][i] === null) {
@@ -90,7 +89,6 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
           strokeStyle: 'solid',
         });
         polyline.setMap(map);
-        failed = true;
         continue;
       }
 
@@ -150,20 +148,6 @@ const ResultPage = ({ results, comments, startPoints, paths }) => {
         });
         polyline.setMap(map);
       });
-    }
-
-    if(failed) {
-      toast.info('경로 표시 실패❗일부 경로가 직선으로 표시돼요🙃', {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      }); 
     }
   }
 

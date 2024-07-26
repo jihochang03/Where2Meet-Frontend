@@ -68,7 +68,7 @@ const Search = ({ onNormalMode }) => {
 
       // filter only if road_address_name starts with '서울' or '경기'
       result.documents = result.documents.filter((doc) => {
-        if(doc.road_address_name.substring(0, 2) === '서울' || doc.road_address_name.substring(0, 2) === '경기')
+        if(doc.road_address_name.substring(0, 2) === '서울' || doc.road_address_name.substring(0, 2) === '경기' || doc.road_address_name.substring(0, 2) === '인천')
           return doc;
       })
 

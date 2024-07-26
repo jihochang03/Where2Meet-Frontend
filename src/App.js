@@ -6,6 +6,8 @@ import ResultPage from './routes/ResultPage';
 import './App.css';
 
 const App = () => {
+  const [mobileFirst, setMobileFirst] = useState(true);
+
   const [results, setResults] = useState(() => {
     const savedResults = localStorage.getItem('results');
     return savedResults ? JSON.parse(savedResults) : [];
