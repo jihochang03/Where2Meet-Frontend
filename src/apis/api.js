@@ -68,7 +68,7 @@ export const searchAddress = async (searchTerm) => {
 
 export const searchPath = async (startX, startY, endX, endY) => {
   try {
-    const api = process.env.REACT_APP_ODSAY_API_KEY;
+    const api = process.env.REACT_APP_ODSAY_API_KEY_2;
     const response = await odsayInstance.get('/searchPubTransPathT', {
       params: {
         SX: startX,
