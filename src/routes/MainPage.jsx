@@ -77,7 +77,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       setIsLoading(false); // 로딩 종료
       return;
     }
-    console.log(results);
+    // console.log(results);
 
     const comments = [];
     for(const result of results) {
@@ -125,10 +125,10 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       if(response !== null && response.result) {
         return response.result.path;
       } else if(response !== null && response.error && response.error.code === "429") {
-        console.log("Too Many Requests. Retry in 300 ms...");
+        console.log(`Too Many Requests. Retry in ${delayMs} ms...`);
         await delay(delayMs);
       } else {
-        console.log(response);
+        // console.log(response);
         return null;
       }
     }
@@ -145,7 +145,7 @@ const MainPage = ({ setResults, setComments, setStartPoints, setPaths }) => {
       return selected_paths;
     }));
     
-    console.log(paths);
+    // console.log(paths);
     return paths;
   }
 
